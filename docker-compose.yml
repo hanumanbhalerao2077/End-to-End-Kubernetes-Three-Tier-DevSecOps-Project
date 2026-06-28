@@ -1,0 +1,55 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:7
+    container_name: todo-mongo
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_DATABASE: todo
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: ./Application-Code/backend
+    container_name: todo-backend
+    restart: unless-stopped
+    environment:
+      PORT: 3500
+      MONGO_CONN_STR: mongodb://mongo:27017/todo
+      USE_DB_AUTH: "false"
+      FRONTEND_URL: http://localhost:3000
+    depends_on:
+      mongo:
+        condition: service_healthy
+    ports:
+      - "3500:3500"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3500/healthz').then(() => process.exit(0)).catch(() => process.exit(1))"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./Application-Code/frontend
+      args:
+        REACT_APP_BACKEND_URL: http://localhost:3500/api/tasks
+    container_name: todo-frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "3000:80"
+
+volumes:
+  mongo-data:

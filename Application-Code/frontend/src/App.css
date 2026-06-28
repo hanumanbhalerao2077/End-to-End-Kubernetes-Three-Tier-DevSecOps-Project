@@ -67,3 +67,17 @@
     text-decoration: line-through;
 }
 
+.form-error {
+    color: #c62828;
+    margin-bottom: 12px;
+}
+
+.empty-state,
+.loading-state {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0;
+    color: #666;
+}
+

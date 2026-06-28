@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-config
+  namespace: todo-app
+data:
+  PORT: "3500"
+  MONGO_CONN_STR: mongodb://mongo:27017/todo
+  FRONTEND_URL: http://todo-frontend.todo-app.svc.cluster.local

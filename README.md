@@ -1,60 +1,132 @@
-# Three-Tier Web Application Deployment on AWS EKS using AWS EKS, ArgoCD, Prometheus, Grafana, and Jenkins
-[![LinkedIn](https://img.shields.io/badge/Connect%20with%20me%20on-LinkedIn-blue.svg)](https://www.linkedin.com/in/aman-devops/)
-[![Discord](https://img.shields.io/badge/Discord-7289DA?style=for-the-badge&logo=discord&logoColor=white)](https://discord.com/invite/jdzF8kTtw2)
-[![Medium](https://img.shields.io/badge/Medium-12100E?style=for-the-badge&logo=medium&logoColor=white)](https://medium.com/@amanpathakdevops)
-[![GitHub](https://img.shields.io/github/stars/AmanPathak-DevOps.svg?style=social)](https://github.com/AmanPathak-DevOps)
-[![AWS](https://img.shields.io/badge/AWS-%F0%9F%9B%A1-orange)](https://aws.amazon.com)
-[![Terraform](https://img.shields.io/badge/Terraform-%E2%9C%A8-lightgrey)](https://www.terraform.io)
+# Production-Ready Three-Tier Todo Application
 
-![Three-Tier Banner](assets/Three-Tier.gif)
+This repository contains a production-ready three-tier web application built with React, Express, and MongoDB. The project demonstrates a complete end-to-end path from local development to containerization, CI/CD, and Kubernetes deployment.
 
-Welcome to the Three-Tier Web Application Deployment project! 🚀
+## Overview
 
-This repository hosts the implementation of a Three-Tier Web App using ReactJS, NodeJS, and MongoDB, deployed on AWS EKS. The project covers a wide range of tools and practices for a robust and scalable DevOps setup.
+The application is a simple todo board that allows users to create, complete, update, and delete tasks. The project is organized into three layers:
 
-## Table of Contents
-- [Application Code](#application-code)
-- [Jenkins Pipeline Code](#jenkins-pipeline-code)
-- [Jenkins Server Terraform](#jenkins-server-terraform)
-- [Kubernetes Manifests Files](#kubernetes-manifests-files)
-- [Project Details](#project-details)
+- Frontend: React single-page application
+- Backend: Express REST API
+- Database: MongoDB
 
-## Application Code
-The `Application-Code` directory contains the source code for the Three-Tier Web Application. Dive into this directory to explore the frontend and backend implementations.
+## Features
 
-## Jenkins Pipeline Code
-In the `Jenkins-Pipeline-Code` directory, you'll find Jenkins pipeline scripts. These scripts automate the CI/CD process, ensuring smooth integration and deployment of your application.
+- Create and manage todo tasks
+- Mark tasks as completed
+- Delete tasks
+- Health and readiness endpoints for orchestration
+- Docker-based local development
+- Kubernetes deployment manifests
+- GitHub Actions CI/CD pipeline
+- Production-friendly configuration and documentation
 
-## Jenkins Server Terraform
-Explore the `Jenkins-Server-TF` directory to find Terraform scripts for setting up the Jenkins Server on AWS. These scripts simplify the infrastructure provisioning process.
+## Tech Stack
 
-## Kubernetes Manifests Files
-The `Kubernetes-Manifests-Files` directory holds Kubernetes manifests for deploying your application on AWS EKS. Understand and customize these files to suit your project needs.
+- Frontend: React, Material UI, Axios
+- Backend: Node.js, Express, Mongoose
+- Database: MongoDB
+- Containerization: Docker, Docker Compose
+- Orchestration: Kubernetes
+- CI/CD: GitHub Actions
 
-## Project Details
-🛠️ **Tools Explored:**
-- Terraform & AWS CLI for AWS infrastructure
-- Jenkins, Sonarqube, Terraform, Kubectl, and more for CI/CD setup
-- Helm, Prometheus, and Grafana for Monitoring
-- ArgoCD for GitOps practices
+## Architecture
 
-🚢 **High-Level Overview:**
-- IAM User setup & Terraform magic on AWS
-- Jenkins deployment with AWS integration
-- EKS Cluster creation & Load Balancer configuration
-- Private ECR repositories for secure image management
-- Helm charts for efficient monitoring setup
-- GitOps with ArgoCD - the cherry on top!
+The application follows a standard three-tier architecture:
 
-📈 **The journey covered everything from setting up tools to deploying a Three-Tier app, ensuring data persistence, and implementing CI/CD pipelines.**
+1. Presentation tier: React frontend served by Nginx in production
+2. Application tier: Express API running on Node.js
+3. Data tier: MongoDB for persistence
 
-## Getting Started
-To get started with this project, refer to our [comprehensive guide](https://amanpathakdevops.medium.com/advanced-end-to-end-devsecops-kubernetes-three-tier-project-using-aws-eks-argocd-prometheus-fbbfdb956d1a) that walks you through IAM user setup, infrastructure provisioning, CI/CD pipeline configuration, EKS cluster creation, and more.
+## Folder Structure
 
-## Contributing
-We welcome contributions! If you have ideas for enhancements or find any issues, please open a pull request or file an issue.
+- Application-Code/backend: backend API and data model
+- Application-Code/frontend: React UI
+- Jenkins-Pipeline-Code: Jenkins pipeline examples
+- Jenkins-Server-TF: Terraform files for Jenkins server provisioning
+- Kubernetes-Manifests-file: Kubernetes deployment manifests
+
+## Local Installation
+
+### Prerequisites
+
+- Node.js 20+
+- npm 10+
+- Docker Desktop (optional for container runs)
+- MongoDB 7+ (or Docker)
+
+### Backend
+
+```bash
+cd Application-Code/backend
+cp .env.example .env
+npm install
+npm start
+```
+
+### Frontend
+
+```bash
+cd Application-Code/frontend
+cp .env.example .env
+npm install
+npm start
+```
+
+## Environment Variables
+
+### Backend
+
+- PORT: HTTP port for the backend (default: 3500)
+- MONGO_CONN_STR: MongoDB connection string
+- USE_DB_AUTH: Enables MongoDB authentication
+- MONGO_USERNAME: MongoDB username
+- MONGO_PASSWORD: MongoDB password
+- FRONTEND_URL: Allowed frontend origin for CORS
+
+### Frontend
+
+- REACT_APP_BACKEND_URL: Backend API URL
+
+## Running with Docker Compose
+
+```bash
+docker compose up --build
+```
+
+The frontend will be available at http://localhost:3000 and the backend at http://localhost:3500.
+
+## Kubernetes
+
+```bash
+kubectl apply -f Kubernetes-Manifests-file/namespace.yaml
+kubectl apply -f Kubernetes-Manifests-file/configmap.yaml
+kubectl apply -f Kubernetes-Manifests-file/secret.yaml
+kubectl apply -f Kubernetes-Manifests-file/mongodb.yaml
+kubectl apply -f Kubernetes-Manifests-file/backend.yaml
+kubectl apply -f Kubernetes-Manifests-file/frontend.yaml
+kubectl apply -f Kubernetes-Manifests-file/ingress.yaml
+kubectl apply -f Kubernetes-Manifests-file/hpa.yaml
+```
+
+## Testing
+
+```bash
+cd Application-Code/backend
+npm test
+
+cd ../frontend
+npm test -- --watchAll=false
+```
+
+## Documentation
+
+- RUN_GUIDE.md: Step-by-step operations guide
+- ARCHITECTURE.md: Architecture and design details
+- API_DOCUMENTATION.md: Endpoint reference
+- PROJECT_AUDIT.md: Audit summary and fixes
+- CHANGELOG.md: Change history
 
 ## License
-This project is licensed under the [MIT License](LICENSE).
 
-Happy Coding! 🚀
+This project is licensed under the MIT License.
