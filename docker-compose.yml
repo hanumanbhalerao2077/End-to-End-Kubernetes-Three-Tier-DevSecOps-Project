@@ -42,7 +42,7 @@ services:
     build:
       context: ./Application-Code/frontend
       args:
-        REACT_APP_BACKEND_URL: http://localhost:3500/api/tasks
+        REACT_APP_BACKEND_URL: http://backend:3500/api/tasks
     container_name: todo-frontend
     restart: unless-stopped
     depends_on:
