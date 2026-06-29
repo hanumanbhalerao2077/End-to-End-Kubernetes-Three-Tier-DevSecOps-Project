@@ -1,7 +1,8 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci
+RUN npm install
+
 COPY . .
 ARG REACT_APP_BACKEND_URL=http://localhost:3500/api/tasks
 ENV REACT_APP_BACKEND_URL=$REACT_APP_BACKEND_URL
