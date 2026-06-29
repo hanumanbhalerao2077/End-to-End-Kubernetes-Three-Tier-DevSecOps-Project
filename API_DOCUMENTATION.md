@@ -1,54 +1,69 @@
-# API Documentation
+# API_DOCUMENTATION.md
 
-## Base URL
+REST API documentation for the backend.
 
-- Local: http://localhost:3500
-- Docker Compose: http://localhost:3500
+Base URL:
+- Local: `http://localhost:3500`
 
-## Endpoints
+---
 
-### GET /healthz
+## Health
 
+### GET `/healthz`
 Returns service health status.
 
 Response:
-
 ```json
 { "status": "ok" }
 ```
 
-### GET /ready
+### GET `/ready`
+Returns readiness (DB connection state).
 
-Returns whether the backend is ready to serve traffic.
+Response codes:
+- `200` when DB is connected
+- `503` when DB is not ready
 
-### GET /started
+Example response:
+```json
+{ "status": "ready" }
+```
 
-Returns startup confirmation.
+---
 
-### GET /api/tasks
+## Tasks
 
+All endpoints are under `/api/tasks`.
+
+### GET `/api/tasks/`
 Returns all tasks.
 
-### POST /api/tasks
-
-Creates a new task.
+### POST `/api/tasks/`
+Create a task.
 
 Request body:
-
 ```json
 { "task": "Write documentation" }
 ```
 
-### PUT /api/tasks/:id
+### PUT `/api/tasks/:id`
+Update task fields.
 
-Updates a task.
-
-Request body:
-
+Request body examples:
 ```json
 { "completed": true }
 ```
 
-### DELETE /api/tasks/:id
+Or update text:
+```json
+{ "task": "New text" }
+```
 
-Deletes a task.
+### DELETE `/api/tasks/:id`
+Delete a task.
+
+Response:
+```json
+{ "success": true, "deletedTask": { /* ... */ } }
+```
+
